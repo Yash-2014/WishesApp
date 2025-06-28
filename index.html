@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festival Wishes Script</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload all necessary language and default fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Laila:wght@700&family=Poppins:wght@400&family=Tiro+Devanagari+Hindi&family=Noto+Sans+Oriya&family=Noto+Sans+Telugu&family=Noto+Sans+Bengali&family=Noto+Sans+Gujarati&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B0000; /* Deep Maroon */
+            --secondary-color: #F0A500; /* Golden Yellow */
+            --background-color: #FFF8E1; /* Creamy Background */
+            --text-color: #4E342E; /* Dark Brown */
+            --card-bg: #fff;
+            --border-color: #FFD700; /* Gold */
+        }
+
+        body {
+            font-family: 'Poppins', 'Tiro Devanagari Hindi', 'Noto Sans Oriya', 'Noto Sans Telugu', 'Noto Sans Bengali', 'Noto Sans Gujarati', sans-serif;
+            background-color: var(--background-color);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        #fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; 
+        }
+
+        .container {
+            background: transparent;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            position: relative;
+            z-index: 1;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .controls select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #greeting-text, #sender-name {
+            font-family: 'Laila', 'Tiro Devanagari Hindi', 'Noto Sans Oriya', 'Noto Sans Telugu', 'Noto Sans Bengali', 'Noto Sans Gujarati', cursive;
+            color: var(--primary-color);
+            transition: color 0.3s, font-family 0.3s;
+        }
+
+        #greeting-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 20px 0;
+            animation: text-glow 2.5s ease-in-out infinite alternate;
+        }
+        
+        #sender-name {
+            font-size: 1.6rem;
+            margin-top: -20px;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        @keyframes text-glow {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px var(--secondary-color), 0 0 15px var(--secondary-color); }
+            to { text-shadow: 0 0 10px #fff, 0 0 15px var(--primary-color), 0 0 20px var(--primary-color); }
+        }
+
+        #festival-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 3px solid var(--border-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-area {
+            margin-top: 25px;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 25px;
+        }
+
+        .input-area p { font-size: 1.1rem; margin-bottom: 15px; }
+        #name-input { width: calc(100% - 24px); padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; margin-bottom: 15px; }
+        
+        #generate-btn { 
+            background: #25D366; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 8px; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: transform 0.2s ease, background-color 0.2s ease; 
+            width: 100%; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        #generate-btn:hover { background-color: #1DA851; transform: scale(1.03); }
+        #generate-btn svg { width: 24px; height: 24px; fill: white; }
+        
+        #result-area { margin-top: 20px; padding: 15px; background-color: #fff9f0; border-radius: 8px; border: 1px solid var(--border-color); display: none; }
+        #result-link-text { word-wrap: break-word; font-size: 0.9rem; background: white; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: left; }
+        #copy-btn { background-color: var(--secondary-color); color: var(--primary-color); border: 1px solid var(--primary-color); padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background-color 0.3s; }
+        #copy-btn:hover { background-color: #ffdead; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; align-items: flex-start; }
+            .container { padding: 20px 15px; }
+            .controls { grid-template-columns: 1fr; }
+            #greeting-text { font-size: 2rem; }
+            #sender-name { font-size: 1.4rem; }
+            .input-area p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="fireworks-container"></div>
+    <div class="container">
+        <div class="controls">
+            <select id="festival-select" title="Choose Festival"></select>
+            <select id="language-select" title="Choose Language"></select>
+            <select id="color-select" title="Change Text Colour"></select>
+            <select id="font-select" title="Change Font Family"></select>
+        </div>
+        <h1 id="greeting-text"></h1>
+        <p id="sender-name"></p>
+        <img id="festival-image" src="" alt="Festival Animation">
+        <div class="input-area">
+            <p id="prompt-text"></p>
+            <input type="text" id="name-input">
+            <button id="generate-btn">
+                <svg viewBox="0 0 800 800"><path d="M627.5 232.8c-28.1-33.3-64.2-61.4-105.3-83.3-40.2-21.4-84-32.2-129.2-32.2-182.2 0-330.3 148.1-330.3 330.3 0 55.4 13.7 107.9 39.5 155.4l-44.4 163.8 167.6-43.7c45.9 23.5 96.1 36 147.6 36h.1c182.2 0 330.3-148.1 330.3-330.3 0-47.3-10.2-93-29.2-135.2zM400.3 709.6h-.1c-43.2 0-85.3-11.2-122.9-32.7l-8.7-5.2-91.4 23.9 24.3-89.4-5.7-9c-24.3-38.6-37.4-83.5-37.4-130.3 0-149.3 121.5-270.8 270.8-270.8 72.3 0 138.9 28.1 189.2 78.4 51.2 51.2 78.4 117.8 78.4 189.2-.2 149.5-121.6 270.9-270.8 270.9zm148.9-209.1c-8.2-4.1-48.7-24-56.2-26.6-7.5-2.6-13-4.1-18.4 4.1-5.4 8.2-21.2 26.6-26.1 32-4.8 5.4-9.7 6-17.9 2-8.2-4.1-34.6-12.8-66-40.9-24.4-21.9-40.9-48.7-45.7-56.9-4.8-8.2-.5-12.8 3.6-16.9 3.6-3.6 8.2-9.7 12.3-14.5 4.1-4.8 5.4-8.2 8.2-13.5 2.6-5.4 1.3-9.7-1.3-13.5-2.6-4.1-18.4-44.2-25.2-60.6-6.6-16.2-13.5-13.8-18.4-14.1-4.6-.2-9.7-.2-14.8-.2s-13 1.9-19.8 8.2c-6.9 6.6-26.1 25.5-26.1 62.3 0 36.8 26.6 72.3 30.2 77.4 3.6 5.4 52.4 84.3 129.5 114.9 17.6 7.1 31.3 11.2 42.1 14.5 17.9 5.4 34.6 4.8 47.5 2.8 14.8-2.3 48.7-19.8 55.6-39.2 6.9-19.5 6.9-36.2 4.8-39.2-2.1-3.3-7.5-5.4-15.7-9.4z"></path></svg>
+                <span id="generate-btn-text"></span>
+            </button>
+        </div>
+        <div id="result-area">
+            <p id="result-prompt-text"></p>
+            <div id="result-link-text"></div>
+            <button id="copy-btn"></button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js/dist/fireworks.js"></script>
+    <script>
+        // --- DATA SECTION ---
+        const data = {
+            // *** IMAGE PATHS ARE NOW UPDATED ***
+            festivals: {
+                'diwali':{image:'images/diwali/laxmi.gif',greetings:{en:'Happy Diwali',hi:'शुभ दिवाली',or:'ଦୀପାବଳିର ଅଭିନନ୍ଦନ',te:'దీపావళి శుభాకాంక్షలు',gu:'દિવાળીની શુભકામનાઓ',mr:'दिवाळीच्या हार्दिक शुभेच्छा',bn:'শুভ দীপাবলি'}},
+                'holi':{image:'images/holi/holi.gif',greetings:{en:'Happy Holi',hi:'होली की शुभकामनाएँ',or:'ହୋଲିର ଶୁଭେଚ୍ଛା',te:'హోలీ శుభాకాంక్షలు',mr:'होळीच्या हार्दिक शुभेच्छा'}},
+                'raksha_bandhan':{image:'images/raksha_bandhan/rakhi.gif',greetings:{en:'Happy Raksha Bandhan',hi:'रक्षाबंधन की शुभकामनाएं',or:'ରକ୍ଷା ବନ୍ଧନର ଶୁଭେଚ୍ଛା',te:'రక్షా బంధన్ శుభాకాంక్షలు',mr:'रक्षाबंधनाच्या हार्दिक शुभेच्छा'}},
+                'eid_fitr':{image:'images/eid_fitr/eid.gif',greetings:{en:'Eid Mubarak',hi:'ईद मुबारक',or:'ईद ମୁବାରକ',te:'ఈద్ ముబారక్',bn:'ঈদ মোবারক'}},
+                'christmas':{image:'images/christmas/christmas.gif',greetings:{en:'Merry Christmas',hi:'मेरी क्रिसमस',or:'ମେରୀ କ୍ରିସମାସ',te:'మెర్రీ క్రిస్మస్',bn:'শুভ বড়দিন'}},
+                'republic_day':{image:'images/republic_day/republic.gif',greetings:{en:'Happy Republic Day',hi:'गणतंत्र दिवस की शुभकामनाएं'}},
+                'independence_day':{image:'images/independence_day/independence.gif',greetings:{en:'Happy Independence Day',hi:'स्वतंत्रता दिवस की बधाई'}},
+                'ganesh_chaturthi':{image:'images/ganesh_chaturthi/ganesh.gif',greetings:{en:'Happy Ganesh Chaturthi',hi:'गणेश चतुर्थी की शुभकामनाएं',mr:'गणेश चतुर्थीच्या हार्दिक शुभेच्छा'}},
+                'navratri':{image:'images/navratri/navratri.gif',greetings:{en:'Happy Navratri',hi:'नवरात्रि की शुभकामनाएं',gu:'નવરાત્રીની શુભકામના'}}
+            },
+            languages:{'en':'English','hi':'हिन्दी','or':'ଓଡ଼ିଆ','te':'తెలుగు','bn':'বাংলা','gu':'ગુજરાતી','mr':'मराठी'},
+            ui_text:{
+                'en':{from_prefix:'From:',prompt:'To send wishes, enter your name below:',placeholder:'Enter your name here...',button:'Share on WhatsApp',result_prompt:'Copy and share this link:',copy:'Copy',copied:'Copied!'},
+                'hi':{from_prefix:'प्रेषक:',prompt:'शुभकामनाएं भेजने के लिए, नीचे अपना नाम लिखें:',placeholder:'अपना नाम यहाँ लिखें...',button:'व्हाट्सएप पर शेयर करें',result_prompt:'इस लिंक को कॉपी करके शेयर करें:',copy:'कॉपी करें',copied:'कॉपी हुआ!'},
+                'or':{from_prefix:'ପଠାଇଛନ୍ତି:',prompt:'ଶୁଭେଚ୍ଛା ପଠାଇବା ପାଇଁ, ତଳେ ଆପଣଙ୍କ ନାମ ଲେଖନ୍ତୁ:',placeholder:'ଏଠାରେ ଆପଣଙ୍କ ନାମ ଲେଖନ୍ତୁ...',button:'ହ୍ଵାଟ୍ସଆପ୍‌ରେ ସେୟାର କରନ୍ତୁ',result_prompt:'ଏହି ଲିଙ୍କକୁ କପି କରି ସେୟାର କରନ୍ତୁ:',copy:'କପି କରନ୍ତୁ',copied:'କପି ହେଲା!'},
+                'te':{from_prefix:'పంపినవారు:',prompt:'శుభాకాంక్షలు పంపడానికి, మీ పేరును కింద నమోదు చేయండి:',placeholder:'మీ పేరు ఇక్కడ నమోదు చేయండి...',button:'వాట్సాప్‌లో షేర్ చేయండి',result_prompt:'ఈ లింక్‌ను కాపీ చేసి షేర్ చేయండి:',copy:'కాపీ చేయండి',copied:'కాపీ చేయబడింది!'},
+                'bn':{from_prefix:'প্রেরক:',prompt:'শুভেচ্ছা পাঠাতে, নিচে আপনার নাম লিখুন:',placeholder:'আপনার নাম এখানে লিখুন...',button:'হোয়াটসঅ্যাপে শেয়ার করুন',result_prompt:'এই লিঙ্কটি কপি করে শেয়ার করুন:',copy:'কপি করুন',copied:'কপি করা হয়েছে!'},
+                'gu':{from_prefix:'પ્રેષક:',prompt:'શુભેચ્છાઓ મોકલવા માટે, નીચે તમારું નામ લખો:',placeholder:'તમારું નામ અહીં લખો...',button:'વોટ્સએપ પર શેર કરો',result_prompt:'આ લિંકને કોપિ કરીને શેર કરો:',copy:'કૉપિ કરો',copied:'કૉપિ થયું!'},
+                'mr':{from_prefix:'प्रेषक:',prompt:'शुभेच्छा पाठवण्यासाठी, खाली आपले नाव लिहा:',placeholder:'आपले नाव येथे लिहा...',button:'व्हॉट्सॲपवर शेअर करा',result_prompt:'ही लिंक कॉपी करून शेअर करा:',copy:'कॉपी करा',copied:'कॉपी झाले!'}
+            },
+            colors: {
+                'default': { name: 'Default Maroon', value: '#8B0000' },'royal_blue': { name: 'Royal Blue', value: '#4169E1' },'peacock_blue': { name: 'Peacock Blue', value: '#008B8B' },'emerald_green': { name: 'Emerald Green', value: '#009B77' },'saffron_orange': { name: 'Saffron Orange', value: '#FF9933'},'hot_pink': { name: 'Hot Pink', value: '#C71585' },'royal_purple': { name: 'Royal Purple', value: '#7851A9' },'deep_sky_blue': { name: 'Deep Sky Blue', value: '#00BFFF'},'crimson_red': { name: 'Crimson Red', value: '#DC143C'}, 'teal': { name: 'Teal', value: '#008080' },'magenta': { name: 'Magenta', value: '#FF00FF'},'gold': { name: 'Gold', value: '#FFD700' },'classic_black': { name: 'Classic Black', value: '#000000' }
+            },
+            fonts: {'laila':{name:'Laila (Default)',family:"'Laila', cursive"},'mukta':{name:'Mukta',family:"'Mukta', sans-serif"},'hind':{name:'Hind',family:"'Hind', sans-serif"},'tapestry':{name:'Tapestry (Stylish)',family:"'Tapestry', cursive"},'sacramento':{name:'Sacramento (Cursive)',family:"'Sacramento', cursive"},'lobster':{name:'Lobster',family:"'Lobster', cursive"},'pacifico':{name:'Pacifico',family:"'Pacifico', cursive"},'caveat':{name:'Caveat (Handwriting)',family:"'Caveat', cursive"},'dancing_script':{name:'Dancing Script',family:"'Dancing Script', cursive"},'indie_flower':{name:'Indie Flower',family:"'Indie Flower', cursive"},'shadows_into_light':{name:'Shadows Into Light',family:"'Shadows Into Light', cursive"},'patrick_hand':{name:'Patrick Hand',family:"'Patrick Hand', cursive"},'amatic_sc':{name:'Amatic SC (Narrow)',family:"'Amatic SC', cursive"},'oswald':{name:'Oswald (Bold)',family:"'Oswald', sans-serif"},'raleway':{name:'Raleway',family:"'Raleway', sans-serif"},'montserrat':{name:'Montserrat',family:"'Montserrat', sans-serif"},'roboto':{name:'Roboto',family:"'Roboto', sans-serif"},'playfair_display':{name:'Playfair Display (Serif)',family:"'Playfair Display', serif"},'merriweather':{name:'Merriweather',family:"'Merriweather', serif"},'lora':{name:'Lora',family:"'Lora', serif"},'bungee_spice':{name:'Bungee Spice (3D)',family:"'Bungee Spice', cursive"},'press_start_2p':{name:'Press Start 2P (Game)',family:"'Press Start 2P', cursive"},'orbitron':{name:'Orbitron (Sci-Fi)',family:"'Orbitron', sans-serif"},'kaushan_script':{name:'Kaushan Script',family:"'Kaushan Script', cursive"},'great_vibes':{name:'Great Vibes (Elegant)',family:"'Great Vibes', cursive"},'cinzel':{name:'Cinzel (Roman)',family:"'Cinzel', serif"},'anton':{name:'Anton (Display)',family:"'Anton', sans-serif"},'bebas_neue':{name:'Bebas Neue',family:"'Bebas Neue', cursive"},'abril_fatface':{name:'Abril Fatface',family:"'Abril Fatface', cursive"},'comfortaa':{name:'Comfortaa (Rounded)',family:"'Comfortaa', cursive"},'cormorant_garamond':{name:'Cormorant Garamond',family:"'Cormorant Garamond', serif"},'crimson_text':{name:'Crimson Text',family:"'Crimson Text', serif"},'eb_garamond':{name:'EB Garamond',family:"'EB Garamond', serif"},'josefin_sans':{name:'Josefin Sans',family:"'Josefin Sans', sans-serif"},'julius_sans_one':{name:'Julius Sans One',family:"'Julius Sans One', sans-serif"},'quicksand':{name:'Quicksand',family:"'Quicksand', sans-serif"},'source_code_pro':{name:'Source Code Pro',family:"'Source Code Pro', monospace"},'ubuntu':{name:'Ubuntu',family:"'Ubuntu', sans-serif"},'zilla_slab':{name:'Zilla Slab',family:"'Zilla Slab', serif"},'poppins':{name:'Poppins (UI Font)',family:"'Poppins', sans-serif"},'russo_one':{name:'Russo One',family:"'Russo One', sans-serif"},'patua_one':{name:'Patua One',family:"'Patua One', cursive"},'alfa_slab_one':{name:'Alfa Slab One',family:"'Alfa Slab One', cursive"},'permanent_marker':{name:'Permanent Marker',family:"'Permanent Marker', cursive"},'satisfy':{name:'Satisfy',family:"'Satisfy', cursive"},'architects_daughter':{name:'Architects Daughter',family:"'Architects Daughter', cursive"},'staatliches':{name:'Staatliches',family:"'Staatliches', cursive"},'cutive_mono':{name:'Cutive Mono',family:"'Cutive Mono', monospace"},'special_elite':{name:'Special Elite (Typewriter)',family:"'Special Elite', cursive"}}
+        };
+
+        const festivalList = { 'diwali': 'Diwali', 'holi': 'Holi', 'raksha_bandhan': 'Raksha Bandhan', 'ganesh_chaturthi': 'Ganesh Chaturthi', 'navratri': 'Navratri', 'janmashtami': 'Janmashtami', 'maha_shivaratri': 'Maha Shivaratri', 'dhanteras': 'Dhanteras', 'bhai_dooj': 'Bhai Dooj', 'eid_fitr': 'Eid al-Fitr', 'christmas': 'Christmas', 'republic_day': 'Republic Day', 'independence_day': 'Independence Day', 'gandhi_jayanti': 'Gandhi Jayanti', 'eid_adha': 'Eid al-Adha', 'muharram': 'Muharram', 'milad_un_nabi': 'Milad-un-Nabi', 'hazarat_ali_birthday': "Hazarat Ali’s Birthday", 'makar_sankranti': 'Makar Sankranti', 'pongal': 'Pongal', 'lohri': 'Lohri', 'vasant_panchami': 'Vasant Panchami', 'ram_navami': 'Ram Navami', 'hanuman_jayanti': 'Hanuman Jayanti', 'gudi_padwa': 'Gudi Padwa', 'ugadi': 'Ugadi', 'cheti_chand': 'Cheti Chand', 'mahavir_jayanti': 'Mahavir Jayanti', 'akshaya_tritiya': 'Akshaya Tritiya', 'rath_yatra': 'Rath Yatra', 'guru_purnima': 'Guru Purnima', 'nag_panchami': 'Nag Panchami', 'onam': 'Onam', 'vijayadashami': 'Vijayadashami', 'karwa_chauth': 'Karwa Chauth', 'ahoi_ashtami': 'Ahoi Ashtami', 'naraka_chaturdashi': 'Naraka Chaturdashi', 'govardhan_puja': 'Govardhan Puja', 'chhath_puja': 'Chhath Puja', 'margashirsha_purnima': 'Margashirsha Purnima', 'karthigai_deepam': 'Karthigai Deepam', 'buddha_purnima': 'Buddha Purnima', 'paryushana': 'Paryushana', 'good_friday': 'Good Friday', 'easter': 'Easter', 'guru_nanak_jayanti': 'Guru Nanak Jayanti', 'guru_gobind_singh_jayanti': 'Guru Gobind Singh Jayanti', 'baisakhi': 'Baisakhi', 'maghi': 'Maghi', 'hola_mohalla': 'Hola Mohalla', 'swami_vivekananda_jayanti': 'Swami Vivekananda Jayanti', 'subhas_chandra_bose_jayanti': 'Subhas Chandra Bose Jayanti', 'guru_ravidas_jayanti': 'Guru Ravidas Jayanti', 'shivaji_maharaj_jayanti': 'Shivaji Maharaj Jayanti', 'dayanand_saraswati_jayanti': 'Dayanand Saraswati Jayanti', 'ramakrishna_jayanti': 'Ramakrishna Jayanti', 'rabindranath_tagore_jayanti': 'Rabindranath Tagore Jayanti', 'maharana_pratap_jayanti': 'Maharana Pratap Jayanti', 'kabir_jayanti': 'Kabir Jayanti', 'tulsidas_jayanti': 'Tulsidas Jayanti', 'ambedkar_jayanti': 'Dr. B. R. Ambedkar Jayanti', 'valmiki_jayanti': 'Valmiki Jayanti', 'mirabai_jayanti': 'Mirabai Jayanti', 'maharaja_agrasen_jayanti': 'Maharaja Agrasen Jayanti', 'teachers_day': "Teachers’ Day", 'childrens_day': "Children’s Day", 'tailang_swami_jayanti': 'Tailang Swami Jayanti', 'engineers_day': "Engineers’ Day", 'national_youth_day': 'National Youth Day', 'womens_day': "Women’s Day", 'world_environment_day': 'World Environment Day', 'international_yoga_day': 'International Yoga Day', 'earth_day': 'Earth Day', 'world_cancer_day': 'World Cancer Day', 'national_science_day': 'National Science Day', 'world_water_day': 'World Water Day', 'labour_day': 'Labour Day', 'world_aids_day': 'World AIDS Day' };
+        
+        const dom = { festivalSelect: document.getElementById('festival-select'), languageSelect: document.getElementById('language-select'), colorSelect: document.getElementById('color-select'), fontSelect: document.getElementById('font-select'), greetingText: document.getElementById('greeting-text'), senderName: document.getElementById('sender-name'), festivalImage: document.getElementById('festival-image'), nameInput: document.getElementById('name-input'), generateBtn: document.getElementById('generate-btn'), generateBtnText: document.getElementById('generate-btn-text'), promptText: document.getElementById('prompt-text'), resultArea: document.getElementById('result-area'), resultPromptText: document.getElementById('result-prompt-text'), resultLinkText: document.getElementById('result-link-text'), copyBtn: document.getElementById('copy-btn') };
+
+        const FONT_FALLBACK_STACK = "'Tiro Devanagari Hindi', 'Noto Sans Oriya', 'Noto Sans Telugu', 'Noto Sans Bengali', 'Noto Sans Gujarati', cursive";
+
+        function populateDropdowns() {
+            for (const key in festivalList) { if (!data.festivals[key]) { data.festivals[key] = { image: `images/${key}/${key}.gif`, greetings: { 'en': `Happy ${festivalList[key]}`, 'hi': `${festivalList[key]} की शुभकामनाएं` } }; } const option = document.createElement('option'); option.value = key; option.textContent = festivalList[key]; dom.festivalSelect.appendChild(option); }
+            for (const key in data.languages) { const option = document.createElement('option'); option.value = key; option.textContent = data.languages[key]; dom.languageSelect.appendChild(option); }
+            for (const key in data.colors) { const option = document.createElement('option'); option.value = data.colors[key].value; option.textContent = data.colors[key].name; dom.colorSelect.appendChild(option); }
+            for (const key in data.fonts) { const option = document.createElement('option'); option.value = key; option.textContent = data.fonts[key].name; dom.fontSelect.appendChild(option); }
+        }
+        
+        function loadGoogleFont(fontFamily) { const fontId = `google-font-${fontFamily.replace(/[^a-zA-Z]/g, "")}`; if (document.getElementById(fontId)) return; const link = document.createElement('link'); link.id = fontId; link.rel = 'stylesheet'; const fontUrlParam = fontFamily.replace(/ /g, '+'); link.href = `https://fonts.googleapis.com/css2?family=${fontUrlParam}:wght@400;700&display=swap`; document.head.appendChild(link); }
+        function updateContent() { const festivalKey = dom.festivalSelect.value; const langKey = dom.languageSelect.value; const festivalData = data.festivals[festivalKey]; const ui = data.ui_text[langKey] || data.ui_text['en']; dom.greetingText.textContent = festivalData.greetings[langKey] || festivalData.greetings['en'] || `Happy ${festivalList[festivalKey]}`; dom.festivalImage.src = festivalData.image; document.title = dom.greetingText.textContent; dom.promptText.textContent = ui.prompt; dom.nameInput.placeholder = ui.placeholder; dom.generateBtnText.textContent = ui.button; dom.resultPromptText.textContent = ui.result_prompt; dom.copyBtn.textContent = ui.copy; dom.resultArea.style.display = 'none'; }
+        function handleUrlParams() { const params = new URLSearchParams(window.location.search); const festival = params.get('f'); const lang = params.get('l'); const from = params.get('from'); if (festival && festivalList[festival]) { dom.festivalSelect.value = festival; } else { dom.festivalSelect.value = 'diwali'; } if (lang && data.languages[lang]) { dom.languageSelect.value = lang; } else { dom.languageSelect.value = 'hi'; } updateContent(); if (from) { const langKey = dom.languageSelect.value; const ui = data.ui_text[langKey] || data.ui_text['en']; dom.senderName.textContent = `${ui.from_prefix} ${decodeURIComponent(from)}`; } else { dom.senderName.textContent = ''; } }
+        
+        function generateLinkAndShare() {
+            const name = dom.nameInput.value.trim();
+            const langKey = dom.languageSelect.value;
+            if (!name) { const alertMessage = (langKey === 'hi') ? 'कृपया अपना नाम दर्ज करें!' : 'Please enter your name!'; alert(alertMessage); return; }
+            const festivalKey = dom.festivalSelect.value;
+            const baseUrl = window.location.href.split('?')[0];
+            const shareUrl = `${baseUrl}?f=${festivalKey}&l=${langKey}&from=${encodeURIComponent(name)}`;
+            const shareData = { title: dom.greetingText.textContent, text: `${dom.greetingText.textContent} - ${data.ui_text[langKey].from_prefix} ${name}`, url: shareUrl };
+            if (navigator.share && navigator.canShare(shareData)) {
+                navigator.share(shareData).catch((error) => { console.log('Sharing failed', error); dom.resultLinkText.textContent = shareUrl; dom.resultArea.style.display = 'block'; });
+            } else { dom.resultLinkText.textContent = shareUrl; dom.resultArea.style.display = 'block'; }
+        }
+
+        function copyLink() { navigator.clipboard.writeText(dom.resultLinkText.textContent).then(() => { const langKey = dom.languageSelect.value; const ui = data.ui_text[langKey] || data.ui_text['en']; dom.copyBtn.textContent = ui.copied; setTimeout(() => { dom.copyBtn.textContent = ui.copy; }, 2000); }).catch(err => { alert('Failed to copy the link.'); }); }
+        
+        window.onload = () => {
+            populateDropdowns();
+            handleUrlParams();
+            const fireworksContainer = document.getElementById('fireworks-container');
+            const fireworks = new Fireworks(fireworksContainer, { rocketsPoint: { min: 50, max: 50 }, hue: { min: 0, max: 360 }, delay: { min: 0.05, max: 0.1 }, speed: 3, acceleration: 1.05, friction: 0.97, gravity: 1.5, particles: 150, flickering: 50, trace: 4, explosion: 7, brightness: { min: 50, max: 80 }, decay: { min: 0.01, max: 0.02 } });
+            fireworks.start();
+        };
+
+        dom.festivalSelect.addEventListener('change', () => { dom.senderName.textContent = ''; updateContent(); });
+        dom.languageSelect.addEventListener('change', () => { updateContent(); const params = new URLSearchParams(window.location.search); const from = params.get('from'); if (from) { const langKey = dom.languageSelect.value; const ui = data.ui_text[langKey] || data.ui_text['en']; dom.senderName.textContent = `${ui.from_prefix} ${decodeURIComponent(from)}`; } });
+        dom.generateBtn.addEventListener('click', generateLinkAndShare);
+        dom.copyBtn.addEventListener('click', copyLink);
+        dom.colorSelect.addEventListener('change', (e) => { dom.greetingText.style.color = e.target.value; dom.senderName.style.color = e.target.value; });
+
+        dom.fontSelect.addEventListener('change', (e) => {
+            const fontKey = e.target.value;
+            const selectedFont = data.fonts[fontKey];
+            if (selectedFont) {
+                loadGoogleFont(selectedFont.family.split(',')[0].replace(/'/g, ''));
+                const newFontFamily = `${selectedFont.family}, ${FONT_FALLBACK_STACK}`;
+                dom.greetingText.style.fontFamily = newFontFamily;
+                dom.senderName.style.fontFamily = newFontFamily;
+            }
+        });
+    </script>
+</body>
+</html>
